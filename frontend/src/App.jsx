@@ -20,7 +20,6 @@ function App() {
           </Route>
       </Routes>
     </BrowserRouter>
-    this is some randomo text
   </div>
   );
 }
