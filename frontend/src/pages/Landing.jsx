@@ -1,4 +1,4 @@
-import {Link, Outlet} from 'react-router-dom'
+import {Link, Outlet, useNavigate} from 'react-router-dom'
 import Home from './Home'
 import { useState } from 'react'
 import Button from '../components/Button'
@@ -18,6 +18,16 @@ if(isauth){
 }
 }
 
+const navigate = useNavigate();
+
+function signupClick(){
+    navigate("/signup");
+}
+
+function loginClick(){
+    navigate("/login");
+}
+
     return (
         <div>
             <div className="py-4 px-8 shadow-md flex justify-between items-center">
@@ -25,8 +35,8 @@ if(isauth){
             <div className='flex justify-between basis-1/4 items-center'> 
             <Link to='/home'>Home</Link>
             <Link to='/courses'>Courses</Link>
-            <Button to={'/signup'} label={'Signup'}/>
-            <Button to={'/login'} label={'Login'}/>
+            <Button to={signupClick} label={'Signup'}/>
+            <Button to={loginClick} label={'Login'}/>
             {
                renderlinks(isauth)
             }
