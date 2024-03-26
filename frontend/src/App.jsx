@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Course from './pages/Course';
+import Admin from './pages/Admin';
+import AdminLogin from './pages/AdminLogin';
 
 function App() {
   return (<div>
@@ -18,6 +20,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           </Route>
+          <Route path='admin' element={<Admin/>}/>
+          <Route path='adminLogin' element={<AdminLogin/>}/>
       </Routes>
     </BrowserRouter>
   </div>

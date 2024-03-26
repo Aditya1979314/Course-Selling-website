@@ -1,6 +1,9 @@
-export default function Login(){
+import { Carousel } from 'flowbite-react';
+
+
+export default function Home(){
     return (
-        <div>
+        <div className='px-2'>
             Home page
         </div>
     )
