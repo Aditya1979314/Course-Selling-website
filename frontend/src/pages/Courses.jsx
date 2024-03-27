@@ -16,7 +16,7 @@ const navigate = useNavigate();
         <div className="grid grid-cols-4 p-4">
             {
                 Courses.map((course)=>{
-                    return <CourseItem key={course.id} title={course.title} price={course.price} description={course.description} image={course.image} onPress={(e)=>{
+                    return <CourseItem key={course.id} title={course.title} price={course.price} description={course.description} image={course.image} label={'View Details'} onPress={(e)=>{
                         navigate("/Course?id="+course.id+"&description="+course.description); 
                     }}/>
                 })
