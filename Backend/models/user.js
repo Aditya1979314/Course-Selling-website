@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     courses:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"course"
+            ref:"Course"
         }
     ]
 });
@@ -19,6 +19,9 @@ const courseSchema = new mongoose.Schema({
     description:{
         type:String,
         required:true
+    },
+    price:{
+        type:String
     },
     image:{
         type:String,

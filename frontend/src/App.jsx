@@ -11,6 +11,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminCourses from './pages/AdminCourses';
 import NewCourse from './pages/NewCourse';
 import EditCourse from './pages/EditCourse';
+import Purchased from './pages/Purchased';
 
 function App() {
   return (<div>
@@ -19,9 +20,10 @@ function App() {
         <Route path="/" element={<Landing/>}>
           <Route path='home'element={<Home />} />
           <Route path='courses'element={<Courses />} />
-          <Route path='course' element={<Course/>}/>
+          <Route path='courses/:id' element={<Course/>}/>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="purchasedcourses" element={<Purchased/>}/>
           </Route>
           <Route path='admin' element={<Admin/>}>
           <Route path='adminLogin' element={<AdminLogin/>}/>

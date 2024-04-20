@@ -2,13 +2,19 @@ import { useEffect, useState } from "react"
 import {data} from '../utils/data'
 import CourseItem from "../components/CourseItem";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function AdminCourses(){
 const[courses,setcourses] = useState([]);
 
 useEffect(()=>{
-    setcourses(data)
+    async function tofetch(){
+        const response = await axios.get('http://localhost:3001/admin/course')
+        setcourses(response.data.msg);
+    }
+    tofetch()
 },[])
+
 
 const navigate= useNavigate();
 

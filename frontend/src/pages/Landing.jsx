@@ -1,32 +1,31 @@
 import {Link, Outlet, useNavigate} from 'react-router-dom'
 import Home from './Home'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../components/Button'
-
+import axios from 'axios'
 
 export default function Landing(){
-const[isauth,setauth] = useState(false);
+const[user,setuser] = useState(0);
 
-function renderlinks(isauth){
-if(isauth){
-    return(<>
-        <Link to='/purchased'>purchased</Link>
-        <Link to='/settings'>settings</Link>
-        <button>logout</button>
-        </>
-    )
+useEffect(()=>{
+async function checktoken(){
+    const token = localStorage.getItem('token');
+    if(token){
+        const response = await axios.get('http://localhost:3001/user/me',{
+            headers:{
+                'authorization':`Bearer ${token}`
+            }
+        });
+        if(response.data.user){
+            setuser(1);
+        }
+    }
 }
-}
+checktoken()
+},[])
 
 const navigate = useNavigate();
 
-function signupClick(){
-    navigate("/signup");
-}
-
-function loginClick(){
-    navigate("/login");
-}
 
     return (
         <div>
@@ -35,10 +34,23 @@ function loginClick(){
             <div className='flex justify-between basis-1/4 items-center'> 
             <Link to='/home'>Home</Link>
             <Link to='/courses'>Courses</Link>
-            <Button to={signupClick} label={'Signup'}/>
-            <Button to={loginClick} label={'Login'}/>
             {
-               renderlinks(isauth)
+                user?(<div>
+                   <Link to='/purchasedcourses'>Purchased</Link>
+                    <Button label={'LogOut'} to={()=>{
+                        localStorage.removeItem('token');
+                        window.location.reload()}}/>
+                    </div>
+                ):(
+                    <div>
+                    <Button to={()=>{
+                        navigate("/signup")
+                    }} label={'Signup'}/>
+                    <Button to={()=>{
+                        navigate("/login")
+                    }} label={'Login'}/>
+                    </div>
+                )
             }
             </div>
             </div>

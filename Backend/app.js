@@ -7,6 +7,7 @@ const aws = require('aws-sdk');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const {User,Course} = require('./models/user');
+const port = 3001;
 
 const inputvalidate = require('./middlewares/inputvalidation');
 const userauth = require('./middlewares/userauth')
@@ -27,7 +28,7 @@ const s3 = new aws.S3();
 
 app.post('/admin/newcourse',upload.single('image'),async (req,res)=>{
     try{
-        const {title,description} = req.body;
+        const {title,description,price} = req.body;
         const {originalname,buffer,mimetype} = req.file;
 
         const uploadparams = {
@@ -42,6 +43,7 @@ app.post('/admin/newcourse',upload.single('image'),async (req,res)=>{
         await Course.create({
             title:title,
             description:description,
+            price:price,
             image:uploadresult.Location
         })
         res.status(200).json({
@@ -70,6 +72,16 @@ try{
 
 // user routes
 
+app.get('/user/me',userauth,async (req,res)=>{
+        const user = await User.findOne({_id:req.userid});
+        if(user){
+            return res.status(200).json({user});
+        }else{
+            return res.status(404).json({msg:"some error occured"})
+        }
+})
+
+
 app.post('/user/signup',inputvalidate,async (req,res)=>{
     try{
         const user = await User.findOne({
@@ -78,7 +90,7 @@ app.post('/user/signup',inputvalidate,async (req,res)=>{
         })
 
         if(user){
-            return res.status(404).json({
+            return res.status(200).json({
                 msg:"user already exists"
             })
         }else{
@@ -106,16 +118,18 @@ app.post('/user/login',inputvalidate,async (req,res)=>{
             email:req.body.email
         })
 
-        if(user){
+        if(!user){
+            return res.status(202).json({msg:"user does not exist"})
+        }
+
+        if(user.password != req.body.password){
+            return res.status(202).json({msg:"password is incorrect"});
+        }
+
             const token = jwt.sign({id:user._id},process.env.jwt_secret);
             return res.status(200).json({
-                data:token
+                token
             })
-        }else{
-            return res.status(404).json({
-                msg:"user isn't signedUp"
-            })
-        }
 
     }catch(err){
         res.status(404).json({
@@ -128,7 +142,7 @@ app.get('/user/courses',async (req,res)=>{
     try{
         const courses = await Course.find({});
         return res.status(200).json({
-            data:courses
+            courses
         })
     }catch(err){
         res.status(404).json({
@@ -137,13 +151,28 @@ app.get('/user/courses',async (req,res)=>{
     }
 })
 
-app.get('/user/purchasedcourses',userauth,async (req,res)=>{
+app.patch('/user/courses/:id',userauth,async(req,res)=>{
     try{
-        const purchasedcourses = await User.findOne({_id:req.userid}).populate('courses').exec();
-        return res.status(200).json({
-            msg:purchasedcourses
+        const courseid = req.params.id;
+        await User.updateOne({_id:req.userid},{$push:{courses:courseid}});
+        res.status(200).json({
+            msg:"course has been purchased"
         })
     }catch(err){
+        res.status(404).json({
+            msg:"course couldn't be purchased"
+        })
+    }
+})
+
+app.get('/user/purchasedcourses',userauth,async (req,res)=>{
+    try{
+        const purchasedcourses = await User.findOne({_id:req.userid}).populate('courses');
+        return res.status(200).json({
+            msg:purchasedcourses.courses
+        })
+    }catch(err){
+        console.error(err)
         return res.status(404).json({
             msg:"some error occured"
         })
@@ -152,8 +181,8 @@ app.get('/user/purchasedcourses',userauth,async (req,res)=>{
 
 dbconnect();
 
-app.listen(3000,()=>{
-    console.log("server connnected");
+app.listen(port,()=>{
+    console.log("server connnected on port"+port);
 })
 
 

@@ -1,10 +1,12 @@
 import { useState,useCallback } from "react"
 import Image from '../components/Image';
+import Button from '../components/Button';
 
 export default function NewCourse(){
 const [image,setimage] = useState();
 const [title,setTitle] = useState();
 const [desc,setdesc] = useState();
+const [price,setprice] = useState();
 const [imagefile,setimagefile] = useState();
 
 
@@ -13,8 +15,9 @@ async function senddata(){
     formdata.append('image',imagefile);
     formdata.append('title',title);
     formdata.append('description',desc);
+    formdata.append('price',price);
     
-    const response = await fetch('http://localhost:3000/admin/newcourse',{
+    const response = await fetch('http://localhost:3001/admin/newcourse',{
         method:"POST",
         body:formdata
     })
@@ -47,6 +50,9 @@ async function senddata(){
             <textarea type="text" placeholder="Description of the course" onChange={(e)=>{
                 setdesc(e.target.value)
             }}></textarea>
+            <input type="text" placeholder="Price of the course" onChange={(e)=>{
+                setprice(e.target.value);
+            }}></input>
             <label for="image" >Enter the image</label>
             <div className="flex gap-4">
                 <input type="file" id="image" name="image" onChange={saveimage} accept="image/*"/>
@@ -54,7 +60,7 @@ async function senddata(){
                     <Image src={image} alt={"course"}/>
                 }
             </div>
-            <button onClick={senddata}>Submit</button>
+            <Button to={senddata} label={'Submit'} />
         </div>
     )
 }
