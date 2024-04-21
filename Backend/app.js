@@ -104,7 +104,6 @@ app.put('/admin/editDetails/:id',upload.single('image'),async (req,res)=>{
 app.delete('/admin/editDetails/delete/:id',async (req,res)=>{
 try{
     const id = req.params.id;
-    console.log(id);
     await Course.deleteOne({_id:id});
     return res.status(200).json({msg:"course deleted"})
 }catch(err){
