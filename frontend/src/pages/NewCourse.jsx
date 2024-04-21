@@ -23,7 +23,7 @@ async function senddata(){
     })
     
     const data = await response.json();
-    console.log(data);
+    alert(data.msg);
     
 }
 
@@ -60,7 +60,7 @@ async function senddata(){
                     <Image src={image} alt={"course"}/>
                 }
             </div>
-            <Button to={senddata} label={'Submit'} />
+            <Button to={senddata} label={'Submit'} color={'blue'} />
         </div>
     )
 }

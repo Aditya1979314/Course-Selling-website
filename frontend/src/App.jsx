@@ -29,7 +29,7 @@ function App() {
           <Route path='adminLogin' element={<AdminLogin/>}/>
           <Route path='courses' element={<AdminCourses/>}/>
           <Route path='NewCourse' element={<NewCourse/>}/>
-          <Route path='EditCourse' element={<EditCourse/>}/>
+          <Route path='EditCourse/:id' element={<EditCourse/>}/>
           </Route>
       </Routes>
     </BrowserRouter>

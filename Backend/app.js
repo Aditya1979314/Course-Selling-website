@@ -70,6 +70,48 @@ try{
 }
 })
 
+app.put('/admin/editDetails/:id',upload.single('image'),async (req,res)=>{
+    try{
+        const id = req.params.id;
+        const {title,description,price} = req.body;
+        const {originalname,buffer,mimetype} = req.file;
+
+        const uploadparams = {
+            Bucket:process.env.bucket,
+            Key:originalname,
+            Body:buffer,
+            ContentType:mimetype
+        }
+
+        const uploadresult = await s3.upload(uploadparams).promise();
+
+        await Course.updateOne({_id:id},{
+            title:title,
+            description:description,
+            price:price,
+            image:uploadresult.Location
+        })
+        res.status(200).json({
+            msg:"course data saved"
+        })
+    }catch(err){
+        res.status(402).json({
+            msg: err
+        })
+    }
+})
+
+app.delete('/admin/editDetails/delete/:id',async (req,res)=>{
+try{
+    const id = req.params.id;
+    console.log(id);
+    await Course.deleteOne({_id:id});
+    return res.status(200).json({msg:"course deleted"})
+}catch(err){
+    return res.status(404).json({err});
+}
+})
+
 // user routes
 
 app.get('/user/me',userauth,async (req,res)=>{

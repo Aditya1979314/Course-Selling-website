@@ -19,11 +19,11 @@ useEffect(()=>{
 
 const navigate = useNavigate();
     return (
-        <div className="grid grid-cols-4 p-4">
+        <div className="grid grid-cols-4 p-4 gap-3">
             {
                 Courses.map((course)=>{
                     return <CourseItem key={course._id} title={course.title} price={course.price} description={course.description} image={course.image} label={'View Details'} onPress={(e)=>{
-                        navigate("/Courses/"+course.id); 
+                        navigate("/Courses/"+course._id); 
                     }}/>
                 })
             }

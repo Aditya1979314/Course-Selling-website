@@ -26,7 +26,7 @@ alert(response.data.msg)
         <Input label={"password"} onchange={(e)=>{
             setpassword(e.target.value);
         }}/>
-        <Button label={"Sign Up"} to={signuphandler}/>
+        <Button label={"Sign Up"} to={signuphandler} color={'blue'}/>
         <div className="flex flex-row">
         <p>Have an account?</p>
         <Link to='/login' className="text-blue-400 font-bold">Login</Link>

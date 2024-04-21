@@ -22,6 +22,7 @@ async function checktoken(){
     }
 }
 checktoken()
+navigate('/home')
 },[])
 
 const navigate = useNavigate();
@@ -36,19 +37,19 @@ const navigate = useNavigate();
             <Link to='/courses'>Courses</Link>
             {
                 user?(<div>
-                   <Link to='/purchasedcourses'>Purchased</Link>
+                   <Link to='/purchasedcourses' className='mr-2'>Purchased</Link>
                     <Button label={'LogOut'} to={()=>{
                         localStorage.removeItem('token');
-                        window.location.reload()}}/>
+                        window.location.reload()}} color={'blue'}/>
                     </div>
                 ):(
                     <div>
                     <Button to={()=>{
                         navigate("/signup")
-                    }} label={'Signup'}/>
+                    }} label={'Signup'} color={'blue'}/>
                     <Button to={()=>{
                         navigate("/login")
-                    }} label={'Login'}/>
+                    }} label={'Login'} color={'blue'}/>
                     </div>
                 )
             }

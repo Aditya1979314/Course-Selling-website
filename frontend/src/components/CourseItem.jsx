@@ -9,7 +9,7 @@ export default function CourseItem({id,description,onPress,image,title,price,lab
             {description}
             </div>
             <div className="font-bold">{price}</div>
-            <Button to={onPress} label={label}/>
+            <Button to={onPress} label={label} color={'blue'}/>
         </div>
     )
     }
