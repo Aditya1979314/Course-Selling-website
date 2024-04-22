@@ -1,5 +1,4 @@
 import {Link, Outlet, useNavigate} from 'react-router-dom'
-import Home from './Home'
 import { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import axios from 'axios'
@@ -20,9 +19,9 @@ async function checktoken(){
             setuser(1);
         }
     }
+    navigate('/home')
 }
 checktoken()
-navigate('/home')
 },[])
 
 const navigate = useNavigate();

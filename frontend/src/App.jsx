@@ -5,7 +5,6 @@ import Landing from './pages/Landing';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Course from './pages/Course';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
 import AdminCourses from './pages/AdminCourses';
@@ -20,7 +19,7 @@ function App() {
         <Route path="/" element={<Landing/>}>
           <Route path='home'element={<Home />} />
           <Route path='courses'element={<Courses />} />
-          <Route path='courses/:id' element={<Course/>}/>
+          {/* <Route path='courses/:id' element={<Course/>}/> */}
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="purchasedcourses" element={<Purchased/>}/>

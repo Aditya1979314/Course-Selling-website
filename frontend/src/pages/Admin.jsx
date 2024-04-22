@@ -1,8 +1,4 @@
-import { BrowserRouter, Link, Outlet, Route, Routes,useNavigate } from 'react-router-dom';
-import NewCourse from './NewCourse';
-import AdminCourses from './AdminCourses';
-import CourseItem from '../components/CourseItem';
-import {data} from '../utils/data';
+import { Link, Outlet,useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export default function Admin(){

@@ -195,6 +195,17 @@ app.get('/user/courses',async (req,res)=>{
 app.patch('/user/courses/:id',userauth,async(req,res)=>{
     try{
         const courseid = req.params.id;
+        const user = await User.findOne({_id:req.userid});
+        const course = user.courses.find((id)=>{
+            return id.toString() === courseid
+        })
+ 
+        if(course){
+            return res.status(200).json({
+                msg:"course already purchased"
+            })
+        }
+
         await User.updateOne({_id:req.userid},{$push:{courses:courseid}});
         res.status(200).json({
             msg:"course has been purchased"
